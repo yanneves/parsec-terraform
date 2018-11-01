@@ -1,9 +1,5 @@
 # Variables
 
-variable "parsec_authcode" {
-  type = "string"
-}
-
 variable "aws_cheapest_az" {
   type    = "string"
   default = ""
@@ -116,14 +112,6 @@ resource "aws_security_group" "parsec" {
   }
 }
 
-data "template_file" "user_data" {
-  template = "${file("user_data.tmpl")}"
-
-  vars {
-    authcode = "${var.parsec_authcode}"
-  }
-}
-
 resource "aws_spot_instance_request" "parsec" {
   spot_price    = "0.7"
   ami           = "${data.aws_ami.parsec.id}"
@@ -144,7 +132,7 @@ resource "aws_spot_instance_request" "parsec" {
     device_name = "xvdg"
   }
 
-  user_data = "${data.template_file.user_data.rendered}"
+  user_data = "${file("user_data.tmpl")}"
 
   vpc_security_group_ids      = ["${aws_security_group.parsec.id}"]
   associate_public_ip_address = true

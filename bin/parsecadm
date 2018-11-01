@@ -41,10 +41,9 @@ plan)
 
   TF_VAR_aws_region=$aws_region \
   TF_VAR_aws_cheapest_az=$cheapest_az \
-  TF_VAR_parsec_authcode=$3 \
   terraform plan
 
-  echo "To proceed, run \"parsecadm apply <aws region> <parsec token>\""
+  echo "To proceed, run \"parsecadm apply <aws region>\""
   ;;
 apply)
   aws_region=$2
@@ -53,22 +52,20 @@ apply)
 
   TF_VAR_aws_region=$aws_region \
   TF_VAR_aws_cheapest_az=$cheapest_az \
-  TF_VAR_parsec_authcode=$3 \
   terraform apply
   ;;
 destroy)
   TF_VAR_aws_region="$(terraform output aws_region)" \
-  TF_VAR_parsec_authcode="" \
   terraform destroy -force
   ;;
 help)
     cat <<EOF
 Parsec ADM - Automated AWS deployments for Parsec(Unofficial) that automatically find the lowest price in your region.
 
-  plan <aws region> <parsec token>
+  plan <aws region>
     Runs a "terraform plan" with the lowest region zone to show you what you'll build.
 
-  apply <aws region> <parsec token>
+  apply <aws region>
     Runs a "terraform apply" to build your server.
 
   destroy
