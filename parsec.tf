@@ -24,7 +24,7 @@ data "aws_ami" "parsec" {
 
   filter {
     name   = "name"
-    values = ["parsec-g3-ws2016-10"]
+    values = ["parsec-g2-ws2016-17"]
   }
 }
 
